@@ -72,6 +72,8 @@ static void update_channel_utilization(void *eloop_data, void *user_data)
 				 hapd->conf->bss_load_update_period);
 			iface->chan_util_samples_sum = 0;
 			iface->chan_util_num_sample_periods = 0;
+			wpa_printf(MSG_INFO, "BSS AVG LOAD: %d",
+                   iface->chan_util_average)
 		}
 	}
 
