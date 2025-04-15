@@ -60,21 +60,22 @@ static void update_channel_utilization(void *eloop_data, void *user_data)
 	if (get_bss_load_update_timeout(hapd, &sec, &usec) < 0)
 		return;
 
-	if (hapd->conf->chan_util_avg_period) {
-		iface->chan_util_samples_sum += iface->channel_utilization;
-		iface->chan_util_num_sample_periods +=
-			hapd->conf->bss_load_update_period;
-		if (iface->chan_util_num_sample_periods >=
-		    hapd->conf->chan_util_avg_period) {
-			iface->chan_util_average =
-				iface->chan_util_samples_sum /
-				(iface->chan_util_num_sample_periods /
-				 hapd->conf->bss_load_update_period);
-			iface->chan_util_samples_sum = 0;
-			iface->chan_util_num_sample_periods = 0;
-			wpa_printf(MSG_INFO, "BSS AVG: %d, Channel: %d", iface->chan_util_average, iface->conf->channel;)
-		}
-	}
+    if (hapd->conf->chan_util_avg_period) {
+        iface->chan_util_samples_sum += iface->channel_utilization;
+        iface->chan_util_num_sample_periods +=
+            hapd->conf->bss_load_update_period;
+        if (iface->chan_util_num_sample_periods >=
+            hapd->conf->chan_util_avg_period) {
+            iface->chan_util_average =
+                iface->chan_util_samples_sum /
+                (iface->chan_util_num_sample_periods /
+                 hapd->conf->bss_load_update_period);
+            iface->chan_util_samples_sum = 0;
+            iface->chan_util_num_sample_periods = 0;
+            wpa_printf(MSG_INFO, "BSS AVG: %d, Channel: %d", iface->chan_util_average, iface->conf->channel);
+        }
+    }
+
 
 	eloop_register_timeout(sec, usec, update_channel_utilization, hapd,
 			       NULL);
